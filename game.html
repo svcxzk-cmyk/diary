@@ -224,25 +224,36 @@
     let mySymbol = null; 
     let gameState = null;
 
-    async function assignPlayer() {
-      const snap = await get(gameRef);
-      const data = snap.val();
+     async function assignPlayer() {
+  const snap = await get(gameRef);
+  const data = snap.val();
 
-      if (!data || !data.players) {
-        mySymbol = 'X';
-        await update(gameRef, { players: { X: true } });
-      } else if (data.players.X && !data.players.O) {
-        mySymbol = 'O';
-        await update(ref(db, 'xoxo/players'), { O: true });
-      } else {
-        mySymbol = null;
-      }
+  if (!data || !data.players || data.gameOver) {
+    mySymbol = 'X';
+    await update(gameRef, { players: { X: true, O: false } });
+  } else if (data.players.X && !data.players.O) {
+    mySymbol = 'O';
+    await update(ref(db, 'xoxo/players'), { O: true });
+  } else if (!data.players.X) {
+    mySymbol = 'X';
+    await update(ref(db, 'xoxo/players'), { X: true });
+  } else {
+    mySymbol = null;
+  }
 
-      roomInfoEl.textContent = mySymbol
-        ? `Kamu bermain sebagai: ${mySymbol}`
-        : 'Kamu menonton!';
-    }
+  roomInfoEl.textContent = mySymbol
+    ? `Kamu bermain sebagai: ${mySymbol}`
+    : 'Kamu menonton!';
+}
 
+window.addEventListener('beforeunload', () => {
+  if (mySymbol === 'X') {
+    update(ref(db, 'xoxo/players'), { X: false });
+  } else if (mySymbol === 'O') {
+    update(ref(db, 'xoxo/players'), { O: false });
+  }
+});
+    
     function checkWinner(board) {
       for (const [a,b,c] of WINS) {
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
