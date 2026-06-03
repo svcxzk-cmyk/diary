@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>our diary</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .home-page {
+      justify-content: center;
+    }
+
+    .diary-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .diary-shadow-1 {
+      position: absolute;
+      inset: 0;
+      background: var(--card);
+      border-radius: 1.25rem;
+      transform: rotate(3deg) scale(1.05);
+      box-shadow: 0 8px 24px rgba(122,21,48,0.10);
+    }
+    .diary-shadow-2 {
+      position: absolute;
+      inset: 0;
+      background: var(--card);
+      border-radius: 1.25rem;
+      transform: rotate(-2deg) scale(1.05);
+      box-shadow: 0 8px 24px rgba(122,21,48,0.10);
+    }
+
+    .diary-card {
+      position: relative;
+      z-index: 2;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 12px 40px rgba(122,21,48,0.14);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .notebook-line {
+      position: absolute;
+      left: 14px; top: 0; bottom: 0;
+      width: 1px;
+      border-left: 1.5px dashed rgba(224,192,202,0.5);
+    }
+
+    .diary-title {
+      font-family: var(--font-script);
+      font-size: clamp(2.2rem, 10vw, 3.2rem);
+      color: var(--primary);
+      line-height: 1.15;
+    }
+
+    .diary-date {
+      color: var(--muted);
+      font-style: italic;
+      font-size: 0.92rem;
+      margin-top: -0.75rem;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      opacity: 0.5;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.75rem;
+    }
+
+    .diary-foot {
+      color: rgba(122,21,48,0.35);
+      font-size: 1.4rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="hearts-bg"></div>
+
+  <div class="page home-page">
+    <div class="diary-wrap">
+      <div class="diary-shadow-1"></div>
+      <div class="diary-shadow-2"></div>
+
+      <div class="diary-card">
+        <div class="notebook-line"></div>
+
+        <div>
+          <h1 class="diary-title">Sweet Diary</h1>
+          <p class="diary-date" id="today-date"></p>
+        </div>
+
+        <div class="divider"></div>
+
+        <nav class="nav-buttons">
+          <a href="game.html" class="btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h4M8 8v4M15 11h.01M17 9h.01"/></svg>
+            Game
+          </a>
+          <a href="kenangan.html" class="btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            Kenangan
+          </a>
+          <a href="surat.html" class="btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            Surat
+          </a>
+        </nav>
+
+        <div class="diary-foot">♥</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="hearts.js"></script>
+  <script>
+    const d = new Date();
+    const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('today-date').textContent = d.toLocaleDateString('id-ID', opts);
+  </script>
+</body>
+</html>

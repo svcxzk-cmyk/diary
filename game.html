@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XOXO!</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .game-page { align-items: center; padding-bottom: 3rem; }
+
+    .game-card {
+      width: 100%;
+      max-width: 380px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 1.25rem;
+      box-shadow: 0 8px 32px rgba(122,21,48,0.10);
+      overflow: hidden;
+    }
+
+    .scoreboard {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 1.75rem 0.5rem;
+    }
+
+    .player {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .player.active { transform: scale(1.12); }
+    .player.inactive { opacity: 0.45; }
+
+    .player-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .player-symbol {
+      font-family: var(--font-script);
+      font-size: clamp(2rem, 9vw, 2.8rem);
+      color: var(--primary);
+      line-height: 1;
+    }
+    .player-score {
+      background: rgba(122,21,48,0.1);
+      color: var(--primary);
+      padding: 0.15rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .vs-text {
+      font-family: var(--font-serif);
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .status {
+      text-align: center;
+      min-height: 2.2rem;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .status.winner {
+      font-size: 1.1rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      padding: 0 1.25rem 1.25rem;
+    }
+
+    .cell {
+      aspect-ratio: 1;
+      background: var(--secondary);
+      border: none;
+      border-radius: 0.75rem;
+      font-family: var(--font-script);
+      font-size: clamp(2rem, 9vw, 3rem);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell:hover:not(:disabled) { background: #e8c8d2; }
+    .cell:active:not(:disabled) { transform: scale(0.94); }
+    .cell:disabled { cursor: default; }
+    .cell.o { color: var(--text); }
+    .cell.win-cell { background: rgba(122,21,48,0.18); }
+
+    .reset-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 0 1.25rem 1.5rem;
+    }
+
+    .reset-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      border: 1.5px solid rgba(122,21,48,0.25);
+      color: var(--primary);
+      padding: 0.65rem 1.75rem;
+      border-radius: 0.85rem;
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .reset-btn:hover  { background: rgba(122,21,48,0.07); }
+    .reset-btn:active { transform: scale(0.96); }
+    .reset-btn svg { width: 16px; height: 16px; }
+
+    .room-info {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 0.25rem 1rem 0.75rem;
+    }
+    .waiting-msg {
+      text-align: center;
+      padding: 1rem;
+      font-family: var(--font-serif);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="hearts-bg"></div>
+
+  <div class="page game-page">
+    <div class="page-header">
+      <a href="index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </a>
+      <span class="page-title xoxo-title">Xoxo</span>
+    </div>
+
+    <div class="game-card">
+      <div class="scoreboard">
+        <div class="player active" id="p1">
+          <span class="player-label">Player 1</span>
+          <span class="player-symbol">X</span>
+          <span class="player-score" id="score-x">0</span>
+        </div>
+        <span class="vs-text">vs</span>
+        <div class="player inactive" id="p2">
+          <span class="player-label">Player 2</span>
+          <span class="player-symbol">O</span>
+          <span class="player-score" id="score-o">0</span>
+        </div>
+      </div>
+
+      <div class="status" id="status">Menunggu pemain...</div>
+      <div class="room-info" id="room-info"></div>
+
+      <div class="board" id="board">
+        <button class="cell" data-i="0"></button>
+        <button class="cell" data-i="1"></button>
+        <button class="cell" data-i="2"></button>
+        <button class="cell" data-i="3"></button>
+        <button class="cell" data-i="4"></button>
+        <button class="cell" data-i="5"></button>
+        <button class="cell" data-i="6"></button>
+        <button class="cell" data-i="7"></button>
+        <button class="cell" data-i="8"></button>
+      </div>
+
+      <div class="reset-wrap">
+        <button class="reset-btn" id="reset-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582M20 20v-5h-.581M5.635 15A9 9 0 1 0 6.06 8.973"/></svg>
+          Main Lagi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set, update, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB2T08vnJl6nopumc01BaFwUqK7Y9za2Z4",
+      authDomain: "sweet-diary-5befe.firebaseapp.com",
+      databaseURL: "https://sweet-diary-5befe-default-rtdb.firebaseio.com",
+      projectId: "sweet-diary-5befe",
+      storageBucket: "sweet-diary-5befe.firebasestorage.app",
+      messagingSenderId: "663108744089",
+      appId: "1:663108744089:web:d9ba620f8371c73fc85908"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const gameRef = ref(db, 'xoxo');
+
+    const WINS = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+
+    const cells = document.querySelectorAll('.cell');
+    const statusEl = document.getElementById('status');
+    const roomInfoEl = document.getElementById('room-info');
+    const scoreX = document.getElementById('score-x');
+    const scoreO = document.getElementById('score-o');
+    const p1El = document.getElementById('p1');
+    const p2El = document.getElementById('p2');
+    const resetBtn = document.getElementById('reset-btn');
+
+    let mySymbol = null; 
+    let gameState = null;
+
+    async function assignPlayer() {
+      const snap = await get(gameRef);
+      const data = snap.val();
+
+      if (!data || !data.players) {
+        mySymbol = 'X';
+        await update(gameRef, { players: { X: true } });
+      } else if (data.players.X && !data.players.O) {
+        mySymbol = 'O';
+        await update(ref(db, 'xoxo/players'), { O: true });
+      } else {
+        mySymbol = null;
+      }
+
+      roomInfoEl.textContent = mySymbol
+        ? `Kamu bermain sebagai: ${mySymbol}`
+        : 'Kamu menonton!';
+    }
+
+    function checkWinner(board) {
+      for (const [a,b,c] of WINS) {
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          return { winner: board[a], line: [a,b,c] };
+        }
+      }
+      return board.every(v => v) ? { winner: 'draw', line: [] } : null;
+    }
+
+    function render(state) {
+      if (!state) return;
+      const { board, isX, scores, gameOver, winLine = [] } = state;
+
+      scoreX.textContent = scores?.X ?? 0;
+      scoreO.textContent = scores?.O ?? 0;
+
+      cells.forEach((cell, i) => {
+        cell.textContent = board[i] || '';
+        cell.className = 'cell' + (board[i] === 'O' ? ' o' : '');
+        if (winLine.includes(i)) cell.classList.add('win-cell');
+
+        const myTurn = (isX && mySymbol === 'X') || (!isX && mySymbol === 'O');
+        cell.disabled = !!board[i] || gameOver || !myTurn || !mySymbol;
+      });
+
+      if (!gameOver) {
+        const waiting = !state.players?.X || !state.players?.O;
+        p1El.className = 'player ' + (isX ? 'active' : 'inactive');
+        p2El.className = 'player ' + (!isX ? 'active' : 'inactive');
+
+        if (waiting) {
+          statusEl.textContent = 'Menunggu Player 2 masuk...';
+          statusEl.className = 'status';
+        } else {
+          const myTurn = (isX && mySymbol === 'X') || (!isX && mySymbol === 'O');
+          statusEl.innerHTML = myTurn
+            ? '<strong>Giliran kamu! ✨</strong>'
+            : `Menunggu ${isX ? 'X' : 'O'}...`;
+          statusEl.className = 'status';
+        }
+      }
+    }
+
+    onValue(gameRef, (snap) => {
+      gameState = snap.val();
+      if (!gameState) return;
+      render(gameState);
+
+      if (gameState.gameOver && gameState.winner) {
+        if (gameState.winner === 'draw') {
+          statusEl.textContent = 'Seri! 🤝';
+        } else {
+          const isMe = gameState.winner === mySymbol;
+          statusEl.textContent = isMe ? 'Kamu menang! 🎉' : 'Kamu kalah 😢';
+          statusEl.className = 'status winner';
+        }
+      }
+    });
+
+    cells.forEach(cell => {
+      cell.addEventListener('click', async () => {
+        if (!gameState || !mySymbol) return;
+        const i = parseInt(cell.dataset.i);
+        const { board, isX, gameOver, players } = gameState;
+
+        if (board[i] || gameOver) return;
+        if (!players?.X || !players?.O) return;
+        const myTurn = (isX && mySymbol === 'X') || (!isX && mySymbol === 'O');
+        if (!myTurn) return;
+
+        const newBoard = [...board];
+        newBoard[i] = mySymbol;
+
+        const result = checkWinner(newBoard);
+        const newScores = { ...(gameState.scores || { X: 0, O: 0 }) };
+
+        if (result?.winner && result.winner !== 'draw') {
+          newScores[result.winner] = (newScores[result.winner] || 0) + 1;
+        }
+
+        await update(gameRef, {
+          board: newBoard,
+          isX: !isX,
+          gameOver: !!result,
+          winner: result?.winner || null,
+          winLine: result?.line || [],
+          scores: newScores
+        });
+      });
+    });
+
+    resetBtn.addEventListener('click', async () => {
+      const currentScores = gameState?.scores || { X: 0, O: 0 };
+      await set(gameRef, {
+        board: Array(9).fill(''),
+        isX: true,
+        gameOver: false,
+        winner: null,
+        winLine: [],
+        scores: currentScores,
+        players: gameState?.players || {}
+      });
+    });
+
+    await assignPlayer();
+
+    const snap = await get(gameRef);
+    if (!snap.val()?.board) {
+      await update(gameRef, {
+        board: Array(9).fill(''),
+        isX: true,
+        gameOver: false,
+        winner: null,
+        winLine: [],
+        scores: { X: 0, O: 0 }
+      });
+    }
+  </script>
+
+  <script src="hearts.js"></script>
+</body>
+</html>

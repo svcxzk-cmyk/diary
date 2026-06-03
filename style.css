@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #faf6f0;
+  --card: #fffcfa;
+  --primary: #7a1530;
+  --primary-light: #c2607a;
+  --secondary: #f0dde2;
+  --muted: #a05068;
+  --border: #e0c0ca;
+  --text: #3a0a18;
+  --font-script: 'Parisienne', cursive;
+  --font-serif: 'Lora', serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  min-height: 100dvh;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Floating hearts background ── */
+#hearts-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart-particle {
+  position: absolute;
+  bottom: -60px;
+  opacity: 0;
+  animation: floatUp linear infinite;
+  user-select: none;
+  line-height: 1;
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+.heart-twinkle {
+  position: absolute;
+  animation: twinkle ease-in-out infinite;
+  user-select: none;
+  line-height: 1;
+  filter: drop-shadow(0 0 2px currentColor);
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0) rotate(-10deg) scale(0); opacity: 0; }
+  10%  { opacity: 0.9; }
+  50%  { transform: translateY(-50vh) translateX(20px) rotate(15deg) scale(1); }
+  90%  { opacity: 0.7; }
+  100% { transform: translateY(-105vh) translateX(-10px) rotate(-5deg) scale(0.7); opacity: 0; }
+}
+
+@keyframes floatSway {
+  0%   { transform: translateY(0) translateX(0) rotate(-15deg) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  30%  { transform: translateY(-30vh) translateX(25px) rotate(10deg) scale(1); }
+  60%  { transform: translateY(-60vh) translateX(-15px) rotate(-5deg) scale(1.1); }
+  90%  { opacity: 0.8; }
+  100% { transform: translateY(-105vh) translateX(10px) rotate(20deg) scale(0.6); opacity: 0; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.8); }
+  50%       { opacity: 0.9;  transform: scale(1.2); }
+}
+
+/* ── Page wrapper ── */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem;
+}
+
+/* ── Back button ── */
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 50px;
+  transition: background 0.2s;
+  margin-right: auto;
+}
+.back-btn:hover { background: rgba(122,21,48,0.08); }
+.back-btn svg { width: 20px; height: 20px; }
+
+/* ── Page header (back + title) ── */
+.page-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 0.75rem 0 1.25rem;
+  position: sticky;
+  top: 0;
+  background: rgba(250,246,240,0.88);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+  border-bottom: 1px solid rgba(224,192,202,0.3);
+  margin-bottom: 1.25rem;
+}
+.page-title {
+  font-family: var(--font-script);
+  font-size: clamp(1.7rem, 7vw, 2.3rem);
+  color: var(--primary);
+  text-align: center;
+  flex: 1;
+  padding-right: 2rem;
+}
+.xoxo-title {
+  font-family: 'Playfair Display', serif !important;
+  font-size: clamp(2.2rem, 8vw, 2.8rem);
+  letter-spacing: 0.08em;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 8px 32px rgba(122,21,48,0.10);
+  padding: 1.75rem 1.5rem;
+}
+
+/* ── Buttons ── */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border-radius: 0.85rem;
+  border: none;
+  background: var(--secondary);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn:hover  { background: #e8c8d2; }
+.btn:active { transform: scale(0.97); }
+.btn svg { width: 20px; height: 20px; color: var(--primary); }
