@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>our memory</title>
+  <link rel="stylesheet" href="style.css" />
+ <style>
+  .kenangan-page {
+    align-items: stretch;
+    padding: 0 1rem 3rem;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .quote {
+    text-align: center;
+    font-style: italic;
+    color: var(--muted);
+    font-size: clamp(0.88rem, 4vw, 1.1rem);
+    padding: 0 0.5rem 1.25rem;
+    line-height: 1.65;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+    align-items: start;
+  }
+
+  .mem-card {
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 1rem;
+    padding: 0.75rem;
+    box-shadow: 0 4px 16px rgba(122,21,48,0.08);
+    transition: transform 0.25s;
+    display: flex;
+    flex-direction: column;
+  }
+  .mem-card:nth-child(odd)  { transform: rotate(1deg); }
+  .mem-card:nth-child(even) { transform: rotate(-1deg); }
+  .mem-card:hover { transform: rotate(0deg) scale(1.03); }
+  .mem-card:active { transform: scale(0.97); }
+
+  .mem-img {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    margin-bottom: 0.65rem;
+    background: var(--secondary);
+  }
+
+  .mem-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.6rem;
+  }
+
+  .mem-img::after {
+    content: "♥";
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-size: 1rem;
+    color: rgba(122,21,48,0.35);
+    z-index: 1;
+  }
+
+  .mem-title {
+    font-family: 'Palatino Linotype', Palatino, serif;
+    font-size: clamp(0.95rem, 4vw, 1.1rem);
+    color: var(--text);
+    text-align: center;
+    line-height: 1.2;
+  }
+  .mem-date {
+    font-size: 0.72rem;
+    color: var(--primary);
+    text-align: center;
+    font-weight: 600;
+    margin: 0.2rem 0;
+  }
+  .mem-desc {
+    font-size: clamp(0.68rem, 3vw, 0.78rem);
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+  <div id="hearts-bg"></div>
+
+  <div class="page kenangan-page">
+    <div class="page-header" style="max-width:100%">
+      <a href="index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </a>
+      <span class="page-title">Kenangan Kita</span>
+    </div>
+
+    <p class="quote">"Setiap detik bersamamu adalah memori terindah."</p>
+
+    <div class="gallery">
+  <div class="mem-card">
+    <div class="mem-img">
+      <img src="fotosatu.jpg" class="mem-photo" alt="Kenangan">
+    </div>
+    <div class="mem-title">The first time we met</div>
+    <div class="mem-date">Desember 2023</div>
+    <div class="mem-desc">bukan karena sengaja tapi memang semesta sudah mengatur semuanya agar kita bertemu. </div>
+  </div>
+
+  <div class="mem-card">
+    <div class="mem-img">
+      <img src="fotodua.jpg" class="mem-photo" alt="Kenangan">
+    </div>
+    <div class="mem-title">the start of us.</div>
+    <div class="mem-date">25 Januari 2024</div>
+    <div class="mem-desc">dimana awal mula aku dan kamu saling belajar satu sama lain.
+</div>
+  </div>
+
+  <div class="mem-card">
+    <div class="mem-img">
+      <img src="fototiga.jpg" class="mem-photo" alt="Kenangan">
+    </div>
+    <div class="mem-title">365 days with you.</div>
+    <div class="mem-date">25 Januari 2025</div>
+    <div class="mem-desc">perasaan yang terus tumbuh dan choosing each other every day.</div>
+  </div>
+
+  <div class="mem-card">
+    <div class="mem-img">
+      <img src="fotoempat.jpg" class="mem-photo" alt="Kenangan">
+    </div>
+    <div class="mem-title">The Hardest Goodbye.</div>
+    <div class="mem-date">16 Mei 2025</div>
+    <div class="mem-desc">ketika ego lebih mendominasi perasaan</div>
+  </div>
+
+  <div class="mem-card">
+    <div class="mem-img">
+      <img src="fotolima.jpg" class="mem-photo" alt="Kenangan">
+    </div>
+    <div class="mem-title">When our paths crossed again. </div>
+    <div class="mem-date">April 2026</div>
+    <div class="mem-desc">kebetulan mana lagi saat kita kembali bertemu.</div>
+  </div>
+
+  <div class="mem-card">
+    <div class="mem-img">
+      <img src="fotoenam.jpg" class="mem-photo" alt="Kenangan">
+    </div>
+    <div class="mem-title">And we found our way back to each other. 🤍 </div>
+    <div class="mem-date">3 Mei 2026</div>
+    <div class="mem-desc">jalanku pulang masih sama dan kamu rumah untukku pulang.</div>
+  </div>
+
+    </div>
+  </div>
+
+  <script src="hearts.js"></script>
+</body>
+</html>

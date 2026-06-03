@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surat</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .surat-page {
+      align-items: stretch;
+      max-width: 520px;
+      margin: 0 auto;
+      width: 100%;
+      padding-bottom: 3rem;
+    }
+
+    .letter-wrap {
+      position: relative;
+      background: var(--card);
+      border: 2px solid rgba(224,192,202,0.5);
+      border-radius: 0.35rem;
+      box-shadow: 0 12px 40px rgba(122,21,48,0.13);
+      overflow: hidden;
+      background-image: repeating-linear-gradient(
+        transparent,
+        transparent 27px,
+        rgba(224,192,202,0.4) 27px,
+        rgba(224,192,202,0.4) 28px
+      );
+    }
+
+    .wax-seal {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(12deg);
+      box-shadow: 0 4px 12px rgba(122,21,48,0.4);
+      z-index: 2;
+      font-size: 1.25rem;
+      color: #faf6f0;
+    }
+
+    .corner-deco {
+      position: absolute;
+      top: 1rem;
+      left: 1.2rem;
+      font-size: 2.5rem;
+      color: rgba(122,21,48,0.08);
+      z-index: 1;
+    }
+
+    .letter-body {
+      position: relative;
+      z-index: 2;
+      padding: 1.75rem 1.5rem;
+      font-family: var(--font-serif);
+      font-size: clamp(0.88rem, 4vw, 1.02rem);
+      line-height: 1.9;
+      color: rgba(58,10,24,0.88);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .letter-greeting {
+      font-family: var(--font-script);
+      font-size: clamp(1.2rem, 5.5vw, 1.5rem);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .letter-sign {
+      padding-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .letter-name {
+      font-family: var(--font-script);
+      font-size: clamp(1.3rem, 6vw, 1.75rem);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .letter-footer {
+      height: 6px;
+      background: linear-gradient(to right, rgba(122,21,48,0.15), rgba(122,21,48,0.5), rgba(122,21,48,0.15));
+    }
+  </style>
+</head>
+<body>
+  <div id="hearts-bg"></div>
+
+  <div class="page surat-page">
+    <div class="page-header" style="max-width:100%">
+      <a href="index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+      </a>
+      <span class="page-title">Surat Untukmu</span>
+    </div>
+
+    <div class="letter-wrap">
+      <div class="wax-seal">♥</div>
+      <div class="corner-deco">♥</div>
+
+      <div class="letter-body">
+        <p class="letter-greeting">Dear my rockstar,</p>
+
+        <p>
+          Terima kasih karena selalu berusaha, karena tetap bertahan, dan karena memilih aku di tengah semua kemungkinan yang ada. Aku nggak janji hubungan kita akan selalu mudah, tapi aku janji akan terus berusaha berjalan di samping kamu, belajar, memperbaiki diri, dan menjaga apa yang sedang kita bangun bersama.
+        </p>
+
+        <p>
+          Selamat satu bulan untuk kita setelah kembali pulang satu sama lain. Semoga ke depannya bukan cuma tentang bertahan, tapi juga tentang tumbuh, tertawa lebih banyak, dan menciptakan kenangan-kenangan baru yang nantinya akan kita kenang.
+        </p>
+
+        <p>
+         Aku sayang kamu. Dan kalau suatu hari nanti aku ditanya siapa rumah paling nyaman yang pernah aku temukan, jawabannya tetap kamu. 🤍
+        </p>
+
+        <div class="letter-sign">
+          <span></span>
+          <span class="letter-name">your girlfie, Kaimala ♥</span>
+        </div>
+      </div>
+
+      <div class="letter-footer"></div>
+    </div>
+  </div>
+
+  <script src="hearts.js"></script>
+</body>
+</html>
